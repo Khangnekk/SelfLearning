@@ -1,0 +1,91 @@
+﻿@page
+@model IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+	ViewData["Title"] = "Home page";
+}
+<head>
+	<title>Sign up</title>
+	<style>
+		.crop {
+			width: 200px;
+			height: 200px;
+			position: relative;
+			overflow: hidden;
+			border-radius: 50%;
+			border: 2px solid black;
+		}
+
+			.crop img {
+				display: inline;
+				margin: 0 auto;
+				height: 100%;
+				width: auto;
+			}
+
+		.main {
+			min-height: 100vh;
+		}
+	</style>
+
+</head>
+<body>
+	<div class="text-center main">
+
+		@if (Model.CurrentUser == null)
+		{
+			<div class="text-center">
+				<p>Enter your name</p>
+				<form method="post" asp-page-handler="CreateUser">
+					<input type="text" asp-for="Name" />
+					<input type="submit" value="Create" />
+				</form>
+				<p>Enter your id to update profile</p>
+				<form method="post" asp-page-handler="Update">
+					<input type="text" asp-for="Id" />
+					<input type="submit" value="Update" />
+				</form>
+			</div>
+		}
+		else
+		{
+			<div style="display: flex; justify-content: center">
+				@if (Model.CurrentUser.Avatar == null)
+				{
+					<div class="crop">
+						<img src="https://www.shutterstock.com/image-vector/blank-avatar-photo-icon-design-600nw-1682415103.jpg" width="200" />
+					</div>
+				}
+				else
+				{
+					<div class="crop">
+						<img src="@Url.Page("Index", "UserImage", new { userId = Model.CurrentUser.Id })" alt="User Image" width="200" />
+					</div>
+				}
+				<div style="text-align: left; margin: 1em; padding: 1em;">
+					<form method="post" asp-page-handler="UpdateAvatar" enctype="multipart/form-data">
+						<input hidden type="text" asp-for="Id" />
+						<label>Upload avatar</label> <br />
+						<input type="file" value="Upload Image" id="imageFile" accept=".png, .jpg" asp-for="FormFile" />
+						<input type="submit" value="Upload Image" />
+						
+					</form><br />
+					<form method="post" asp-page-handler="UpdateUser">
+						<p>Id:</p>
+						<input type="text" value="@Model.CurrentUser.Id" asp-for="Id" />
+						<p>Name:</p>
+						<input type="text" value="@Model.CurrentUser.Name" asp-for="Name" /><br /><br />
+						<input type="submit" value="Upload Info" />
+					</form>
+				</div>
+			</div>
+		}
+		<div>
+			@if (Model.Message != null)
+			{
+				<p style="color: red">@Model.Message</p>
+			}
+		</div>
+	</div>
+	
+</body>
