@@ -108,7 +108,7 @@ namespace SelfLearning.Pages
 			{
 				_logger.LogWarning("FormFile is null or empty.");
 				ModelState.AddModelError("FormFile", "Please select a file.");
-				Message = "Please select a file.";
+				Message = "Please select a file";
 			}
 		}
 
