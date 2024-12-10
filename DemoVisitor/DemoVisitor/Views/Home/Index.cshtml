@@ -1,0 +1,47 @@
+﻿@using System.Text.Json;
+
+@{
+	ViewData["Title"] = "Home Page";
+	var jsonData = ViewData["JsonData"];
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<link href="~/css/site.css" rel="stylesheet" />
+<div>
+	<span class="btn btn-success" id="btnSave">Save</span>
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>Check in on kiosk</th>
+					<th>Locations</th>
+					<th>Filter</th>
+					<th></th>
+					<th>Remove</th>
+				</tr>
+			</thead>
+			<tbody id="tbodyCheckInOnKiosk">
+			</tbody>
+		</table>
+		<span class="btn btn-outline-primary" id="btnAddCheckInOnKiosk">Add</span>
+	</div>
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>Check in at Reception</th>
+					<th>Locations</th>
+					<th>Filter</th>
+					<th></th>
+					<th>Remove</th>
+				</tr>
+			</thead>
+			<tbody id="tbodyCheckInAtReception">
+			</tbody>
+		</table>
+		<span class="btn btn-outline-primary" id="btnAddCheckInAtReception">Add</span>
+	</div>
+</div>
+<script>
+	const jsonData = @Html.Raw(jsonData);
+</script>
+<script src="~/js/attendee.js"></script>
