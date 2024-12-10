@@ -78,7 +78,6 @@ function removeRow(id) {
 }
 
 $('#btnSave').on('click', function () {
-    // Lấy tất cả các dòng trong bảng
     const updatedData = [];
 
     $('#tbodyCheckInOnKiosk tr').each(function () {
@@ -103,7 +102,6 @@ $('#btnSave').on('click', function () {
         });
     });
 
-    // Gửi dữ liệu về server để cập nhật hoặc thêm mới
     saveData(updatedData);
 });
 
