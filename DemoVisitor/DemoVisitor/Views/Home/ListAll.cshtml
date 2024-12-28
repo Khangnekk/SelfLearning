@@ -28,14 +28,14 @@
 		</tr>
 	}
 </table>
-<div>
+<div class="pagination">
 	@for (int i = 1; i <= ViewBag.TotalPage; i++)
 	{
 		<a asp-controller="Home"
 		   asp-action="ListAll"
 		   asp-route-pageIndex="@i"
 		   asp-route-keyword="@ViewBag.Keyword"
-		   class="@(i == ViewBag.CurrentPage ? "active" : "")">
+		   class="@(i == ViewBag.CurrentPage ? "active" : "")" style="margin: 2px">
 			@i
 		</a>
 	}
