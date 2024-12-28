@@ -1,0 +1,67 @@
+﻿@using DemoVisitor.Models;
+@{
+	ViewData["Title"] = "List all visitor content email";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<div style="display: flex; justify-content: space-between; align-items:center">
+	<h1>@ViewData["Title"]</h1>
+	<form id="searchForm" asp-controller="Home" asp-action="List" method="get">
+		<input type="text" id="tbSearch" name="keyword" placeholder="Search.." value="@ViewBag.Keyword" />
+		<input type="hidden" name="pageIndex" value="1" />
+	</form>
+
+</div>
+<table class="table">
+	<tr>
+		<th>Id</th>
+		<th>Content Text</th>
+		<th>Content Type</th>
+		<th>LocationIds</th>
+	</tr>
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>@item.Id</td>
+			<td>@item.ContentText</td>
+			<td>@item.ContentType</td>
+			<td>@item.LocationIds</td>
+		</tr>
+	}
+</table>
+<div>
+	@for (int i = 1; i <= ViewBag.TotalPage; i++)
+	{
+		<a asp-controller="Home"
+		   asp-action="ListAll"
+		   asp-route-pageIndex="@i"
+		   asp-route-keyword="@ViewBag.Keyword"
+		   class="@(i == ViewBag.CurrentPage ? "active" : "")">
+			@i
+		</a>
+	}
+</div>
+<script>
+	$(document).ready(function () {
+		let debounceTimer;
+		$('#tbSearch').on('input', function () {
+			clearTimeout(debounceTimer);
+			debounceTimer = setTimeout(() => {
+				const keyword = $('#tbSearch').val();
+				$.ajax({
+					url: '@Url.Action("ListAll", "Home")',
+					type: 'GET',
+					data: { keyword: keyword },
+					success: function (response) {
+						$('table.table').html($(response).find('table.table').html());
+						$('div.pagination').html($(response).find('div.pagination').html());
+					},
+					error: function (xhr, status, error) {
+						console.error('Error loading search results:', error);
+					}
+				});
+			}, 200);
+		});
+	});
+</script>
+
+

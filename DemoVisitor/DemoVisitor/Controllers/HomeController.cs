@@ -52,11 +52,37 @@ namespace DemoVisitor.Controllers
 			return Json(new { success = true });
 		}
 
-
-		public IActionResult Privacy()
+		[HttpGet]
+		public IActionResult ListAll(int? pageIndex, string? keyword)
 		{
-			return View();
+			pageIndex ??= 1;
+			int pageSize = 10;
+
+			var query = _demoVisitorContext.VisitorContentEmails.AsQueryable();
+
+			if (!string.IsNullOrEmpty(keyword))
+			{
+				query = query.Where(x => x.ContentText != null && x.ContentText.ToLower().Contains(keyword.ToLower()));
+			}
+
+			var totalRecords = query.Count();
+			var totalPage = (int)Math.Ceiling(totalRecords / (double)pageSize);
+
+			pageIndex = Math.Max(1, Math.Min(pageIndex.Value, totalPage));
+
+			var lists = query
+				.Skip((pageIndex.Value - 1) * pageSize)
+				.Take(pageSize)
+				.ToList();
+
+			ViewBag.TotalPage = totalPage;
+			ViewBag.CurrentPage = pageIndex;
+			ViewBag.Keyword = keyword;
+
+			return View("./Views/Home/ListAll.cshtml", lists);
 		}
+
+
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
