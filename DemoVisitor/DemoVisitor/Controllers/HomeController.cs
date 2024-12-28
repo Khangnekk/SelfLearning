@@ -1,4 +1,5 @@
-﻿using DemoVisitor.Models;
+﻿// All are demos, just focus on the main part, ignore design pattern
+using DemoVisitor.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Text.Json;

@@ -1,4 +1,4 @@
-﻿
+﻿//All are demos, just focus on the main part, ignore design pattern
 const data = typeof jsonData !== 'undefined' ? jsonData : [];
 
 if (data.length > 0) {

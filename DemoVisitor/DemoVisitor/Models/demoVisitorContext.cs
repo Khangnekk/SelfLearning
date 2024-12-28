@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿//All are demos, just focus on the main part, ignore design pattern
+using Microsoft.EntityFrameworkCore;
 
 namespace DemoVisitor.Models
 {
